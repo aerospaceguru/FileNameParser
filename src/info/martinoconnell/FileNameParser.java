@@ -14,6 +14,7 @@ public class FileNameParser {
 
 	static String location;
 	static String csvFileName;
+	static File desktop = new File(System.getProperty("user.home"), "Desktop");
 
 	public FileNameParser() {
 
@@ -21,9 +22,6 @@ public class FileNameParser {
 		Scanner sc1 = new Scanner(System.in);
 		location = sc1.nextLine();
 
-		System.out.print("Enter new file name: ");
-		Scanner sc2 = new Scanner(System.in);
-		csvFileName = sc2.nextLine();
 	}
 
 	public static void main(String[] args) throws IOException {
@@ -51,7 +49,7 @@ public class FileNameParser {
 		for(int i=0; i<FileNames1.size(); i++) {
 			String str = FileNames1.get(i);
 
-			for(int j=str.length()-1; j>=-1; j--) {	
+			for(int j=str.length()-1; j>=0; j--) {	
 				if(str.charAt(j) == '\\') {
 					str1 = str.substring(j+1, str.length());
 					break; // This ensures that the loop ends when the FIRST backslash is reached in reverse order
@@ -81,7 +79,7 @@ public class FileNameParser {
 		}
 
 		// This loop cycles through the FileNames4 String array list and prints each entry to a new line in a CSV
-		File csvFile = new File(location + "\\" + csvFileName);
+		File csvFile = new File(desktop + "\\" + "fileNames.csv");
 		try (PrintWriter csvWriter = new PrintWriter(new FileWriter(csvFile));){
 			for(String item : FileNames4){
 				csvWriter.println(item);
@@ -90,7 +88,7 @@ public class FileNameParser {
 			System.out.println("An I/O error has occurred");
 			e.printStackTrace();
 		}
-		System.out.println("Success! CSV file created.");
+		System.out.println("\nSuccess! CSV file created & located on your desktop at " + desktop);
 	}
 
 }
